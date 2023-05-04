@@ -5,13 +5,15 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportSummary.Api", "ReportSummary.Api\ReportSummary.Api.csproj", "{BEA1B1D1-BE1F-406D-ADB1-B4A11C57FDD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportSummary.Model", "ReportSummary.Model\ReportSummary.Model.csproj", "{F15FC095-3985-48B1-A54E-639E9D093E34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportSummary.Model", "ReportSummary.Model\ReportSummary.Model.csproj", "{F15FC095-3985-48B1-A54E-639E9D093E34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportSummary.Services", "ReportSummary.Services\ReportSummary.Services.csproj", "{C33BAB82-09EB-4C97-A7CE-0060F17D7336}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportSummary.Services", "ReportSummary.Services\ReportSummary.Services.csproj", "{C33BAB82-09EB-4C97-A7CE-0060F17D7336}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportSummary.Configuration", "ReportSummary.Configuration\ReportSummary.Configuration.csproj", "{0EC75BBA-E40C-4EB8-8FCB-2CC4C4CD26D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportSummary.Configuration", "ReportSummary.Configuration\ReportSummary.Configuration.csproj", "{0EC75BBA-E40C-4EB8-8FCB-2CC4C4CD26D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportSummary.Api.Tests", "ReportSummary.Api.Tests\ReportSummary.Api.Tests.csproj", "{23C98C92-0F93-48CD-9520-DEB285788B64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportSummary.Api.Tests", "ReportSummary.Api.Tests\ReportSummary.Api.Tests.csproj", "{23C98C92-0F93-48CD-9520-DEB285788B64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportSummary.Services.Tests", "ReportSummary.Services.Tests\ReportSummary.Services.Tests.csproj", "{3FD8BFF8-A6E2-43F2-9FC4-7632C0845D12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{23C98C92-0F93-48CD-9520-DEB285788B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23C98C92-0F93-48CD-9520-DEB285788B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23C98C92-0F93-48CD-9520-DEB285788B64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FD8BFF8-A6E2-43F2-9FC4-7632C0845D12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FD8BFF8-A6E2-43F2-9FC4-7632C0845D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FD8BFF8-A6E2-43F2-9FC4-7632C0845D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FD8BFF8-A6E2-43F2-9FC4-7632C0845D12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

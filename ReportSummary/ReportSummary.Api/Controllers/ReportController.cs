@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using ReportSummary.Api.Model;
 using ReportSummary.Configuration;
+using ReportSummary.Model;
 using ReportSummary.Services;
 using static Azure.Core.HttpHeader;
 
@@ -73,20 +74,40 @@ namespace ReportSummary.Api.Controllers
 
         // POST api/<ReportController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<ReportResponse>> Post(IFormFile reportFile)
         {
+            using var reportStream = reportFile.OpenReadStream();
+            var nowUtc = DateTimeOffset.UtcNow;
+            var report = await _reportService.CreateReportAsync(reportStream, nowUtc);
+
+            if (report != null)
+            {
+                var reportResponse = new ReportResponse
+                {
+                    Id = report.Id,
+                    Name = report.Name,
+                    ReportId = report.ReportId,
+                    ReportYear = report.ReportYear,
+                    ReportCode = report.ReportCode,
+                    ReportSectorTitle = report.ReportSectorTitle,
+                    ReportTitle = report.ReportTitle,
+                };
+                return Ok(reportResponse);
+            }
+
+            return NoContent();
         }
 
-        // PUT api/<ReportController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT api/<ReportController>/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
-        // DELETE api/<ReportController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// DELETE api/<ReportController>/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

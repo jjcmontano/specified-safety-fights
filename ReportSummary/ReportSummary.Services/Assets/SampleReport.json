@@ -1,0 +1,62 @@
+{
+    "ReportYear": {
+        "Year": 2023
+    },
+    "ReportID": {
+        "ID": 1557
+    },
+    "ReportCode": {
+        "Code": "62121"
+    },
+    "ReportCollectionType": {
+        "CollectionType": "Core"
+    },
+    "ReportCollectionCode": {
+        "CollectionCode": "COR"
+    },
+    "ReportSectorCode": {
+        "Code": "62"
+    },
+    "ReportSectorTitle": {
+        "Title": "Healthcare and Social Assistance"
+    },
+    "ReportSectorComparisonCode": {
+        "Code": ""
+    },
+    "ReportSectorComparisonTitle": {
+        "Title": ""
+    },
+    "ReportTitle": {
+        "Title": "Dentists in the US"
+    },
+    "PublishedDate": {
+        "Date": "2023-01-11T01:37:06"
+    },
+    "PublishedDateFormatted": {
+        "Date": "11 January 2023"
+    },
+    "Author": {
+        "AuthorName": "Foo"
+    },
+    "FinancialRatios": null,
+    "CurrentPerformanceAnalysis": {
+        "AnalysisPlainText": "Foo",
+        "AnalysisHTML": "Bar"
+    },
+    "OutlookAnalysis": {
+        "AnalysisPlainText": "Foo",
+        "AnalysisHTML": "Bar"
+    },
+    "MajorMarketsAnalysis": {
+        "AnalysisPlainText": "Foo",
+        "AnalysisHTML": "Bar"
+    },
+    "ProductsAndServicesAnalysis": {
+        "AnalysisPlainText": "Foo",
+        "AnalysisHTML": "Bar"
+    },
+    "CostStructureBenchmarksAnalysis": {
+        "AnalysisPlainText": "Foo",
+        "AnalysisHTML": "Bar"
+    }
+}

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -8,6 +9,7 @@ using ReportSummary.Configuration;
 using ReportSummary.Model;
 using ReportSummary.Services;
 using System;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
 
 namespace ReportSummary.Api.Tests.Controllers
@@ -20,7 +22,7 @@ namespace ReportSummary.Api.Tests.Controllers
         private MockRepository mockRepository;
 
         private Mock<IReportService> mockReportService;
-        private Mock<IOptions<CosmosConfiguration>> mockOptions;
+        private IOptions<CosmosConfiguration> mockOptions;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         [SetUp]
@@ -30,8 +32,7 @@ namespace ReportSummary.Api.Tests.Controllers
 
             this.mockReportService = this.mockRepository.Create<IReportService>();
             
-            this.mockOptions = this.mockRepository.Create<IOptions<CosmosConfiguration>>();
-            this.mockOptions.SetupGet(s => s.Value).Returns(new CosmosConfiguration
+            this.mockOptions = Options.Create(new CosmosConfiguration
             {
                 Container = "Container",
                 Database = "Database",
@@ -45,7 +46,7 @@ namespace ReportSummary.Api.Tests.Controllers
         {
             return new ReportController(
                 this.mockReportService.Object,
-                this.mockOptions.Object);
+                this.mockOptions);
         }
 
         [Test]
@@ -148,53 +149,86 @@ namespace ReportSummary.Api.Tests.Controllers
         }
 
         [Test]
-        public void Post_StateUnderTest_ExpectedBehavior()
+        public async Task Post_StateUnderTest_ExpectedBehavior()
         {
             // Arrange
+            var nowUtc = DateTimeOffset.UtcNow;
             var reportController = this.CreateReportController();
-            string value = null;
+            var mockReports = new List<ReportRecord>
+            {
+                new ReportRecord
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Name 1",
+                    ReportId = 1,
+                },
+                new ReportRecord
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Name 2",
+                    ReportId = 2,
+                },
+            };
+
+            this.mockReportService.Setup(s => s.CreateReportAsync(
+                    It.IsAny<Stream>(),
+                    It.IsAny<DateTimeOffset>(),
+                    It.IsAny<string>()
+                ))
+                .ReturnsAsync(
+                    mockReports[0]
+                );
 
             // Act
-            reportController.Post(
-                value);
+            using var memStream = new MemoryStream();
+            var result = await reportController.Post(new FormFile(
+                    memStream,
+                    0,
+                    0,
+                    "reportFile",
+                    "Foo.bar"
+                ));
 
             // Assert
-            Assert.Fail();
-            this.mockRepository.VerifyAll();
+            Assert.That(result, Is.TypeOf<ActionResult<ReportResponse>>());
+            var objectResult = result.Result as ObjectResult;
+            var reportsResult = objectResult?.Value as ReportResponse;
+            Assert.That(reportsResult?.Id, Is.EqualTo(mockReports[0].Id));
+            Assert.That(reportsResult?.Name, Is.EqualTo(mockReports[0].Name));
         }
 
-        [Test]
-        public void Put_StateUnderTest_ExpectedBehavior()
-        {
-            // Arrange
-            var reportController = this.CreateReportController();
-            int id = 0;
-            string value = null;
+        //[Test]
+        //public void Put_StateUnderTest_ExpectedBehavior()
+        //{
+        //    // Arrange
+        //    var reportController = this.CreateReportController();
+        //    int id = 0;
+        //    string value = null;
 
-            // Act
-            reportController.Put(
-                id,
-                value);
+        //    // Act
+        //    reportController.Put(
+        //        id,
+        //        value);
 
-            // Assert
-            Assert.Fail();
-            this.mockRepository.VerifyAll();
-        }
+        //    // Assert
+        //    Assert.Fail();
+        //    this.mockRepository.VerifyAll();
+        //}
 
-        [Test]
-        public void Delete_StateUnderTest_ExpectedBehavior()
-        {
-            // Arrange
-            var reportController = this.CreateReportController();
-            int id = 0;
+        //[Test]
+        //public void Delete_StateUnderTest_ExpectedBehavior()
+        //{
+        //    // Arrange
+        //    var reportController = this.CreateReportController();
+        //    int id = 0;
 
-            // Act
-            reportController.Delete(
-                id);
+        //    // Act
+        //    reportController.Delete(
+        //        id);
 
-            // Assert
-            Assert.Fail();
-            this.mockRepository.VerifyAll();
-        }
+        //    // Assert
+        //    Assert.Fail();
+        //    this.mockRepository.VerifyAll();
+        //}
     }
 }

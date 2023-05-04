@@ -6,11 +6,12 @@
         public Guid Id { get; set; }
         public string? Name { get; set; }
         public string? PartitionKey { get; set; }
+        public DateTimeOffset? CreatedDateTimeOffset { get; set; }
         #endregion Utility Fields
 
         #region Report Identification
-        public int ReportId { get; set; }
-        public int ReportYear { get; set; }
+        public int? ReportId { get; set; }
+        public int? ReportYear { get; set; }
         public string? ReportCode { get; set; }
         public string? ReportSectorTitle { get; set; }
         public string? ReportTitle { get; set; }
