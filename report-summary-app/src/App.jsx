@@ -15,6 +15,7 @@ import '@fontsource/roboto/700.css';
 
 import './App.css';
 import ReportList from './components/ReportList';
+import SummaryDialog from './components/SummaryDialog';
 import TopNav from './components/TopNav';
 import ReportsStore from './contexts/ReportsStore';
 import theme from './theme';
@@ -28,6 +29,7 @@ function App() {
                 <GlobalStyles />
                 <ReportsStore>
                     <>
+                        <SummaryDialog />
                         <Box sx={{ flexGrow: 1 }}>
                             <TopNav />
                         </Box>

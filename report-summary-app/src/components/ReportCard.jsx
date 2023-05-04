@@ -2,12 +2,17 @@ import {
     Card, CardActionArea, CardContent, CardHeader, Typography
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
+import { ReportsContext } from '../contexts/ReportsStore';
 
 function ReportCard(props) {
-    const { report } = props
+    const { report } = props;
+    const [, dispatch] = useContext(ReportsContext);
+
+    const handleClick = () => dispatch({type: 'SELECT_REPORT', payload: report.id})
+
     return (
-        <Card sx={(theme) => ({boxShadow: theme.shadows[2]})}>
+        <Card sx={(theme) => ({boxShadow: theme.shadows[2]})} onClick={handleClick}>
             <CardActionArea>
                 <CardHeader
                     title={report.name}

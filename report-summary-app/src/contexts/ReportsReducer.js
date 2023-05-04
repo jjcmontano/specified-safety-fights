@@ -25,6 +25,17 @@ const ReportsReducer = (state, action) => {
             ...state,
             reportsLoading: false,
         };
+    case 'SET_SUMMARY_DONE':
+        return {
+            ...state,
+            summaryLoading: false,
+        };
+    case 'SELECT_REPORT':
+        return {
+            ...state,
+            selectedReportId: action.payload,
+            showSummary: true,
+        }
     case 'SET_SUMMARY':
         return {
             ...state,
@@ -60,6 +71,8 @@ const ReportsReducer = (state, action) => {
             ...state,
             showSummary: false,
             summary: null,
+            selectedReportId: null,
+            summaryLoading: true
         }
     default:
         return state;

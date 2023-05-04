@@ -29,11 +29,7 @@ function ReportList() {
     }
     
     if (reportsError) {
-        return (
-            <div>
-                <Typography color="error.main" variant="body1"><Error sx={{mr: 1}} />Failed to fetch reports: {reportsError}</Typography>
-            </div>
-        );
+        return (<Typography color="error.main" variant="body1"><Error sx={{mr: 1}} />Failed to fetch reports: {reportsError}</Typography>);
     }
 
     return (

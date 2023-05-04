@@ -47,7 +47,9 @@ namespace ReportSummary.Services
                 };
 
                 Completions response = await _openAIClient.GetCompletionsAsync(_openAiConfiguration.DeploymentModel, completionOptions);
-                return response?.Choices?.FirstOrDefault()?.Text;
+                var textResult = response?.Choices?.FirstOrDefault()?.Text;
+
+                return textResult;
             }
 
             return null;
