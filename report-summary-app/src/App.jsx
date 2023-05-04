@@ -4,6 +4,7 @@ import {
     Box,
     CssBaseline,
     GlobalStyles,
+    Skeleton,
     StyledEngineProvider,
     ThemeProvider,
 } from '@mui/material';
@@ -24,7 +25,7 @@ function App() {
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <GlobalStyles />
-                <Suspense fallback={<span>Loading...</span>}>
+                <Suspense fallback={<Skeleton />}>
                     <Box sx={{ flexGrow: 1 }}>
                         <TopNav />
                     </Box>
