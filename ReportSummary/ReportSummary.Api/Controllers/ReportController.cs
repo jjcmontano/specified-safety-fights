@@ -104,10 +104,13 @@ namespace ReportSummary.Api.Controllers
         //{
         //}
 
-        //// DELETE api/<ReportController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE api/<ReportController>/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            await _reportService.DeleteReportAsync(id, _cosmosConfiguration.DefaultPartitionKey);
+
+            return NoContent();
+        }
     }
 }

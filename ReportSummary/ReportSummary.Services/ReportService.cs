@@ -109,5 +109,10 @@ namespace ReportSummary.Services
 
             return null;
         }
+
+        public async Task DeleteReportAsync(Guid reportId, string? partitionKey = null)
+        {
+            await Container.DeleteItemAsync<Report>(reportId.ToString(), new PartitionKey(partitionKey));
+        }
     }
 }

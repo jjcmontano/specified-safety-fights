@@ -215,20 +215,32 @@ namespace ReportSummary.Api.Tests.Controllers
         //    this.mockRepository.VerifyAll();
         //}
 
-        //[Test]
-        //public void Delete_StateUnderTest_ExpectedBehavior()
-        //{
-        //    // Arrange
-        //    var reportController = this.CreateReportController();
-        //    int id = 0;
+        [Test]
+        public async Task Delete_ReportExists_ReportDeleted()
+        {
+            // Arrange
+            var reportController = this.CreateReportController();
+            var mockReports = new List<ReportRecord>
+            {
+                new ReportRecord
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Name 1",
+                    ReportId = 1,
+                },
+                new ReportRecord
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Name 2",
+                    ReportId = 2,
+                },
+            };
+            this.mockReportService.Setup(
+                s => s.DeleteReportAsync(It.IsAny<Guid>(), It.IsAny<string>())
+            ).Returns(Task.CompletedTask);
 
-        //    // Act
-        //    reportController.Delete(
-        //        id);
-
-        //    // Assert
-        //    Assert.Fail();
-        //    this.mockRepository.VerifyAll();
-        //}
+            // Act
+            Assert.DoesNotThrowAsync(async () => await reportController.Delete(mockReports[0].Id));
+        }
     }
 }
