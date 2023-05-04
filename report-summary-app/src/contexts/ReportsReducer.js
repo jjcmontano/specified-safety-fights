@@ -1,33 +1,30 @@
-/* eslint-disable react/forbid-prop-types */
-import PropTypes from 'prop-types';
-import React, { createContext, useContext, useReducer } from 'react';
-
-export const ReportsContext = createContext();
-
-const reducer = (state, action) => {
+const ReportsReducer = (state, action) => {
     switch (action.type) {
     case "SET_REPORTS":
         return {
             ...state,
             reports: action.payload,
+            reportsError: null,
             reportsLoading: false,
         };
     case "ADD_REPORT":
         return {
             ...state,
             reports: state.reports.concat(action.payload),
+            reportsError: null,
             reportsLoading: false,
         };
-    case 'SET_REPORT_ERROR':
+    case 'SET_REPORTS_ERROR':
         return {
             ...state,
-            reportError: action.payload,
+            reportsError: action.payload,
             reportsLoading: false,
         };
     case 'SET_SUMMARY':
         return {
             ...state,
             summary: action.payload,
+            summaryError: null,
             summaryLoading: false,
         }
     case 'SET_SUMMARY_ERROR':
@@ -39,11 +36,13 @@ const reducer = (state, action) => {
     case 'SET_REPORTS_LOADING':
         return {
             ...state,
+            reportsError: null,
             reportsLoading: true,
         }
     case 'SET_SUMMARY_LOADING':
         return {
             ...state,
+            summaryError: null,
             summaryLoading: true,
         }
     case 'SHOW_SUMMARY':
@@ -62,20 +61,4 @@ const reducer = (state, action) => {
     }
 };
 
-export function ReportsProvider({ initialState, children }) {
-    return (<ReportsContext.Provider value={useReducer(reducer, initialState)}>
-        {children}
-    </ReportsContext.Provider>);
-}
-
-ReportsProvider.defaultProps ={
-    initialState: {},
-    children: []
-}
-
-ReportsProvider.propTypes = {
-    initialState: PropTypes.object,
-    children: PropTypes.array,
-}
-
-export const useReports = () => useContext(ReportsContext);
+export default ReportsReducer;

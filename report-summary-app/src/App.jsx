@@ -17,37 +17,26 @@ import '@fontsource/roboto/700.css';
 import './App.css';
 import ReportList from './components/ReportList';
 import TopNav from './components/TopNav';
+import ReportsStore from './contexts/ReportsStore';
 import theme from './theme';
 
 function App() {
+
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <GlobalStyles />
-                <Suspense fallback={<Skeleton />}>
-                    <Box sx={{ flexGrow: 1 }}>
-                        <TopNav />
-                    </Box>
-                    <Box p={1}>
-                        <ReportList reports={[
-                            {
-                                id: 'foo',
-                                name: 'foo',
-                                year: 1,
-                                reportSectorTitle: 'foo',
-                                reportCode: 'foo',
-                            },
-                            {
-                                id: 'bar',
-                                name: 'foo',
-                                year: 2,
-                                reportSectorTitle: 'foo',
-                                reportCode: 'foo',
-                            },
-                        ]} />
-                    </Box>
-                </Suspense>
+                <ReportsStore>
+                    <Suspense fallback={<Skeleton />}>
+                        <Box sx={{ flexGrow: 1 }}>
+                            <TopNav />
+                        </Box>
+                        <Box p={1}>
+                            <ReportList />
+                        </Box>
+                    </Suspense>
+                </ReportsStore>
             </ThemeProvider>
         </StyledEngineProvider>
     );
