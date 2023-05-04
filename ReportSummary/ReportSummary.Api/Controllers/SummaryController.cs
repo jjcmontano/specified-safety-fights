@@ -15,10 +15,10 @@ namespace ReportSummary.Api.Controllers
             _summaryService = summaryService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<string>> Get([FromRoute] Guid id)
+        [HttpGet("{reportRecordId}")]
+        public async Task<ActionResult<string>> Get([FromRoute] Guid reportRecordId)
         {
-            var summaryResult = await _summaryService.GetReportSummaryAsync(id);
+            var summaryResult = await _summaryService.GetReportSummaryAsync(reportRecordId);
 
             if (summaryResult != null)
             {
