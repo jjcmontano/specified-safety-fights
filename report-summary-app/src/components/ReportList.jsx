@@ -1,10 +1,41 @@
-import { Grid } from '@mui/material';
-import React, { useContext } from 'react';
+import { Error } from '@mui/icons-material';
+import { Grid, Skeleton, Typography } from '@mui/material';
+import React, { useContext, useEffect } from 'react';
+import ReportsApi from '../api/ReportsApi';
 import { ReportsContext } from '../contexts/ReportsStore';
 import ReportCard from './ReportCard';
 
 function ReportList() {
-    const [{reports}] = useContext(ReportsContext);
+    const [{reports, reportsLoading, reportsError}, dispatch] = useContext(ReportsContext);
+
+    useEffect(() => {
+        const getReports = async () => {
+            try {
+                dispatch({type: 'SET_REPORTS_LOADING'});
+                const reportsData = await ReportsApi.getReports();
+                dispatch({type: 'SET_REPORTS', payload: reportsData});
+            } catch (error) {
+                dispatch({type: 'SET_REPORTS_ERROR', payload: error?.message ?? error ?? 'Unknown'});
+            } finally {
+                dispatch({type: 'SET_REPORTS_DONE'})
+            }
+        }
+
+        getReports();
+    }, [])
+
+    if (reportsLoading) {
+        return (<Skeleton variant="rounded" width={400} height={200} />);
+    }
+    
+    if (reportsError) {
+        return (
+            <div>
+                <Typography color="error.main" variant="body1"><Error sx={{mr: 1}} />Failed to fetch reports: {reportsError}</Typography>
+            </div>
+        );
+    }
+
     return (
         <Grid container spacing={1} alignItems="flex-end">
             {reports.map(report => (
@@ -14,6 +45,7 @@ function ReportList() {
             ))}
         </Grid>
     );
+    
 }
 
 // ReportList.propTypes = {

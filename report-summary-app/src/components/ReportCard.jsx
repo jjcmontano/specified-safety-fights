@@ -11,7 +11,7 @@ function ReportCard(props) {
             <CardActionArea>
                 <CardHeader
                     title={report.name}
-                    subheader={`Year: ${report.year}`}
+                    subheader={`Year: ${report.reportYear}`}
                     titleTypographyProps={{ align: 'center' }}
                     subheaderTypographyProps={{
                         align: 'center',
@@ -35,7 +35,7 @@ ReportCard.propTypes = {
     report: PropTypes.shape({
         id: PropTypes.string,
         name: PropTypes.string,
-        year: PropTypes.number,
+        reportYear: PropTypes.number,
         reportSectorTitle: PropTypes.string,
         reportCode: PropTypes.string,
     }).isRequired,

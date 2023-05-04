@@ -20,6 +20,11 @@ const ReportsReducer = (state, action) => {
             reportsError: action.payload,
             reportsLoading: false,
         };
+    case 'SET_REPORTS_DONE':
+        return {
+            ...state,
+            reportsLoading: false,
+        };
     case 'SET_SUMMARY':
         return {
             ...state,

@@ -1,12 +1,11 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import {
     Box,
     CssBaseline,
     GlobalStyles,
-    Skeleton,
     StyledEngineProvider,
-    ThemeProvider,
+    ThemeProvider
 } from '@mui/material';
 
 import '@fontsource/roboto/300.css';
@@ -28,14 +27,14 @@ function App() {
                 <CssBaseline />
                 <GlobalStyles />
                 <ReportsStore>
-                    <Suspense fallback={<Skeleton />}>
+                    <>
                         <Box sx={{ flexGrow: 1 }}>
                             <TopNav />
                         </Box>
                         <Box p={1}>
                             <ReportList />
                         </Box>
-                    </Suspense>
+                    </>
                 </ReportsStore>
             </ThemeProvider>
         </StyledEngineProvider>

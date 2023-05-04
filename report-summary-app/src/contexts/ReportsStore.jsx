@@ -1,24 +1,9 @@
 /* eslint-disable react/prop-types */
-import React, { createContext, useMemo, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 import ReportsReducer from "./ReportsReducer";
 
 const initialState = {
-    reports: [
-        {
-            id: 'foo',
-            name: 'foo',
-            year: 1,
-            reportSectorTitle: 'foo',
-            reportCode: 'foo',
-        },
-        {
-            id: 'bar',
-            name: 'foo',
-            year: 3,
-            reportSectorTitle: 'foo',
-            reportCode: 'foo',
-        },
-    ],
+    reports: [],
     reportsLoading: false,
     reportsError: null,
     summary: null,
@@ -27,12 +12,12 @@ const initialState = {
 }
 
 function ReportsStore({children}) {
-    const [state, dispatch] = useReducer(ReportsReducer, initialState);
+    // const [state, dispatch] = useReducer(ReportsReducer, initialState);
 
-    const storeValue = useMemo(() => [state, dispatch], [state, dispatch]);
+    // const storeValue = useMemo(() => [state, dispatch], [state, dispatch]);
 
     return (
-        <ReportsContext.Provider value={storeValue}>
+        <ReportsContext.Provider value={useReducer(ReportsReducer, initialState)}>
             {children}
         </ReportsContext.Provider>
     )
