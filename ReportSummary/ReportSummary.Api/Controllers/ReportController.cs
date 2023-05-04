@@ -51,7 +51,7 @@ namespace ReportSummary.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ReportResponse>> Get([FromRoute] Guid id)
         {
-            var report = await _reportService.GetReportRecordById(id, _cosmosConfiguration.DefaultPartitionKey);
+            var report = await _reportService.GetReportRecordByIdAsync(id, _cosmosConfiguration.DefaultPartitionKey);
 
             if (report != null)
             {

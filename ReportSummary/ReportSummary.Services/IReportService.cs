@@ -4,7 +4,7 @@ namespace ReportSummary.Services
 {
     public interface IReportService
     {
-        Task<ReportRecord?> GetReportRecordById(Guid reportId, string? partitionKey = null);
+        Task<ReportRecord?> GetReportRecordByIdAsync(Guid reportId, string? partitionKey = null);
         IAsyncEnumerable<ReportRecord> GetReportRecordsAsync();
     }
 }

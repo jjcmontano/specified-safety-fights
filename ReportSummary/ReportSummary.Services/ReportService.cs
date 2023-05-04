@@ -38,7 +38,7 @@ namespace ReportSummary.Services
             }
         }
 
-        public async Task<ReportRecord?> GetReportRecordById(Guid reportId, string? partitionKey = null)
+        public async Task<ReportRecord?> GetReportRecordByIdAsync(Guid reportId, string? partitionKey = null)
         {
             var reportResult = await Container.ReadItemAsync<ReportRecord>(reportId.ToString(), new PartitionKey(partitionKey));
 
