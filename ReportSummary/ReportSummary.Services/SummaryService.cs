@@ -1,4 +1,5 @@
 ﻿using Azure.AI.OpenAI;
+using Microsoft.Extensions.Options;
 using ReportSummary.Configuration;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,12 @@ namespace ReportSummary.Services
         private readonly OpenAiConfiguration _openAiConfiguration;
         private readonly CosmosConfiguration _cosmosConfiguration;
 
-        public SummaryService(OpenAIClient openAIClient, IReportService reportService, OpenAiConfiguration openAiConfiguration, CosmosConfiguration cosmosConfiguration)
+        public SummaryService(OpenAIClient openAIClient, IReportService reportService, IOptions<OpenAiConfiguration> openAiConfiguration, IOptions<CosmosConfiguration> cosmosConfiguration)
         {
             _openAIClient = openAIClient;
             _reportService = reportService;
-            _openAiConfiguration = openAiConfiguration;
-            _cosmosConfiguration = cosmosConfiguration;
+            _openAiConfiguration = openAiConfiguration.Value;
+            _cosmosConfiguration = cosmosConfiguration.Value;
         }
 
         public async Task<string?> GetReportSummaryAsync(Guid reportId)
@@ -31,18 +32,18 @@ namespace ReportSummary.Services
 
             if (report != null)
             {
-                var prompt = "Summarise the following report down to exactly 5 bullet points. Each bullet point must composed of at least 20 words up to a maximum of 40 words each. Focus on the main trends of the industry mentioned in the report:\n" +
+                var prompt = $"Summarise the following report down to exactly 5 bullet points. Each bullet point must have at least 20 words. Each bullet point must have a maximum of 40 words. Focus on the main trends of the {report.ReportSectorTitle} industry:\n" +
                     "\n" +
-                    $"{report.CurrentPerformanceAnalysis} {report.OutlookAnalysis} {report.MajorMarketsAnalysis} {report.ProductsAndServicesAnalysis} {report.CostStructureBenchmarksAnalysis}";
+                    $"{report.CurrentPerformanceAnalysis?.ReplaceLineEndings(" ")} {report.OutlookAnalysis?.ReplaceLineEndings(" ")} {report.MajorMarketsAnalysis?.ReplaceLineEndings(" ")} {report.ProductsAndServicesAnalysis?.ReplaceLineEndings(" ")} {report.CostStructureBenchmarksAnalysis?.ReplaceLineEndings(" ")}";
 
                 var completionOptions = new CompletionsOptions
                 {
                     Prompts = { prompt },
-                    MaxTokens = 64,
+                    MaxTokens = 200,
                     Temperature = 0f,
                     FrequencyPenalty = 0.0f,
                     PresencePenalty = 0.0f,
-                    NucleusSamplingFactor = 1 // Top P
+                    NucleusSamplingFactor = 1, // Top P
                 };
 
                 Completions response = await _openAIClient.GetCompletionsAsync(_openAiConfiguration.DeploymentModel, completionOptions);

@@ -78,7 +78,7 @@ namespace ReportSummary.Api.Controllers
         {
             using var reportStream = reportFile.OpenReadStream();
             var nowUtc = DateTimeOffset.UtcNow;
-            var report = await _reportService.CreateReportAsync(reportStream, nowUtc);
+            var report = await _reportService.CreateReportAsync(reportStream, nowUtc, _cosmosConfiguration.DefaultPartitionKey);
 
             if (report != null)
             {

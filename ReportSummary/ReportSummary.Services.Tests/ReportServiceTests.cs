@@ -117,7 +117,7 @@ namespace ReportSummary.Services.Tests
             var mockItemResponse = new Mock<ItemResponse<ReportRecord>>();
             mockItemResponse.SetupAllProperties();
             mockItemResponse.SetupGet(_ => _.Resource).Returns(expectedReport);
-            mockItemResponse.SetupGet(_ => _.StatusCode).Returns(System.Net.HttpStatusCode.OK);
+            mockItemResponse.SetupGet(_ => _.StatusCode).Returns(System.Net.HttpStatusCode.Created);
             this.mockContainer.Setup(_ => _.CreateItemAsync(
                 It.IsAny<ReportRecord>(),
                 It.IsAny<PartitionKey>(),

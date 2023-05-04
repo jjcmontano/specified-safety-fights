@@ -67,6 +67,7 @@ namespace ReportSummary.Services
                 
                 return new ReportRecord
                 {
+                    Id = Guid.NewGuid(),
                     Name = report.ReportTitle?.Title,
                     PartitionKey = _cosmosConfiguration.DefaultPartitionKey,
                     CreatedDateTimeOffset = nowUtc,
@@ -100,10 +101,9 @@ namespace ReportSummary.Services
 
             var reportResult = await Container.CreateItemAsync(parsedReport, new PartitionKey(partitionKey));
 
-            if (reportResult.StatusCode == System.Net.HttpStatusCode.OK)
+            if (reportResult.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 var reportRecord = reportResult.Resource;
-                reportRecord.Id = Guid.NewGuid();
                 return reportRecord;
             }
 
